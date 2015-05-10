@@ -1,206 +1,388 @@
-# 前端课程
+# 从 0 到 1 实现响应式个人网站
 
-本次小课程共两课时，我们会通过实现一个支持响应式布局的页面来简略介绍如下内容：
-1. 从零开始写一个页面的整体思路
-2. 常见的布局实践
-3. 元素浮动与 absolute 定位
-4. 让你的网站支持移动版——响应式布局
+对于很多不擅长前端的程序员来说，写 CSS 是一件很痛苦的事情。虽然你了解了 CSS 的基本原理，真的去实现一个设计却发现其实不是那么简单，毕竟还是 too young。
 
-我们要实现的页面是：[http://profile-sample.strikingly.com/](http://profile-sample.strikingly.com/)，该页面是 Strikingly 的一个个人网站模板。
+CSS 有很多坑。同样的属性在不同的环境，或者使用在不同的元素上，都有可能产生完全不同的效果。 明明设定了间隔，为什么在某些情况却不生效？为什么 float 把我的布局打乱了？为什么 `text-align: center` 不能居中某个元素？
 
-## 第一步 使用代码样板
-从零开始写一个页面，绝大多数情况下我们都需要一个代码样板来帮我们快速开始，以避免重复的工作。这个样板至少会包括以下内容：
+很多时候写 CSS 感觉像是在碰运气。浏览器渲染出来不是你要的效果，也不知道为什么，就只能瞎调属性。姿势就对了，浏览器就会给我们正确的效果。
+
+前端大牛工作的方法不一样。他们不在个别属性的层面思考。看到一个需求，他们能直接匹配一个适用的 “CSS Design Pattern”。用设计模式，他们能更快的实现一个页面，减少浪费在调试的时间。
+
+在这个 CSS 教程，我们要模仿 Strikingly 实现一个响应式个人网站：
+
+![](stringkinly-profile.jpg)
+
+该页面可以在此访问： [http://profile-sample.strikingly.com/](http://profile-sample.strikingly.com/)，
+
+这个教程和其他教程不一样，我们不提供可以工作的代码。我们会按需求介绍 “CSS 设计模式” 给你认识，而你必须自己去尝试把这些概念应用在一个真正的页面上。
+
+请你打开你忠实的编辑器，边看边做！
+
+# 使用代码样板
+
+从零开始写一个页面，绝大多数情况下我们都需要一个代码样板来帮我们快速开始，避免重复的工作。这个样板至少会包括以下内容：
 
 1. 设置 doctype
 2. 设置页面编码
 3. 引入初始化 css
 
-作为一个前端开发者，应该维护好一份适合自己的代码样板，使得日后自己的每个项目都可以以此来初始化。网上最流行的代码样板为：[HTML5 Boilerplate](https://html5boilerplate.com/)，可以参考。下面是一份我常用的样板：
+作为一个前端开发者，你应该维护好一份适合自己的代码样板，使得日后自己的每个项目都可以以此来初始化。下面是一份我常用的样板：
 
 ```html
+<!--
+HTML5. Use tags like <article>, <section>, etc.
+See: http://www.sitepoint.com/web-foundations/doctypes/
+-->
 <!doctype html>
+
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title></title>
-            <meta name="viewport" content="width=device-width,initial-scale=1">
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/main.css">
-    </head>
-    <body>
-    </body>
+  <head>
+    <meta charset="utf-8">
+
+    <!--
+    Ask IE to behave like a modern browser
+    See: https://www.modern.ie/en-us/performance/how-to-use-x-ua-compatible
+    -->
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>My Site</title>
+
+    <!--
+    Disables zooming on mobile devices.
+    -->
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <!--
+    Stylesheet that minimizes browser differences.
+    See: http://necolas.github.io/normalize.css/
+    -->
+    <link rel="stylesheet" href="css/normalize.css">
+
+    <!--
+    Our own stylesheet.
+    -->
+    <link rel="stylesheet" href="css/main.css">
+  </head>
+  <body>
+    put content here
+  </body>
 </html>
 ```
 
-其中可以看到我们引入了 normalize.css，这是一个被广泛使用的开源库，用来统一各个浏览器之间的差异。如果你之前在使用 reset.css 来完成同样的事情，请迁移到 normalize.css。关于他们之间的差异可以参考：
+在这个简单的样板我们做了挺多事：
 
-[英文：What is the difference between Normalize.css and Reset CSS](http://stackoverflow.com/questions/6887336/what-is-the-difference-between-normalize-css-and-reset-css)
++ 指定使用 HTML5 语法
++ 要求 IE 遵守现代浏览器的渲染标准
++ 锁死页面在移动设备显示宽度
++ 引入了 [normalize.css](http://necolas.github.io/normalize.css), 在默认的HTML元素样式上提供了跨浏览器的高度一致性
 
-[中文：来，让我们谈一谈 Normalize.css](http://jerryzou.com/posts/aboutNormalizeCss/)
+> **提示**: 如果你之前在使用 reset.css 来完成同样的事情，请迁移到 normalize.css。关于他们之间的差异可以参考：
++ [英文：What is the difference between Normalize.css and Reset CSS](http://stackoverflow.com/questions/6887336/what-is-the-difference-between-normalize-css-and-reset-css)
++ [中文：来，让我们谈一谈 Normalize.css](http://jerryzou.com/posts/aboutNormalizeCss/)
 
-## 第二步 设置背景
+请你克隆这个课程的样板：
 
-滚动时可以发现：
+```
+git clone https://github.com/hayeah/fork2-css-lesson-starter.git
+```
+
+点击 `index.html` 打开页面。
+
+
+# 设置固定背景
+
+滚动页面时可以发现：
 
 1. 页面的背景是固定的，不随页面的滚动而滚动
 2. 同时放大和缩小窗口可以发现页面背景也会随之放大和缩小
 
-首先来实现第一个内容。背景固定有两种实现方式，一种是元素 fixed，其背景不做特殊处理；另一种是背景固定，元素不做特殊处理。对于第二种实现方式即在 `body` 元素中设置 `background-image` 并使 `background-attachment` 属性设置为 `fixed`，其文档可以参阅 [MDN](https://developer.mozilla.org/zh-CN/docs/CSS/background-attachment)，对应的浏览器兼容性可以参阅 [Can I Use](http://caniuse.com/#feat=background-attachment)。MDN 和 Can I Use 这两个网站在前端开发中非常重要，一定要养成查阅的习惯。
 
-接下来要解决的是第二个问题，最简单的方法是设置 `background-size` 为 `100%`，这样可以使得背景的宽度撑满整个屏幕，但问题在于当屏幕的宽高比小于图片的宽高比时，底部会露出空白，如：
-![](DraggedImage.png)
+首先我们就来实现这个固定背景。
 
-为此可以使用 `cover` 这个值，使得背景图始终填满整个屏幕。具体仍然参阅 [MDN 对应内容](https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-size)。
+MDN 和 Can I Use 这两个网站在前端开发中非常重要，在使用 CSS3 属性的时候一定要养成查阅的习惯, 确认你的目标浏览器有支持。
 
-## 第三步 实现外包围框
+### CSS 样板 - 固定背景
 
-我们接下来要实现外包围框，代码示例如下：
+背景固定有两种实现方式，一种是元素 fixed，其背景不做特殊处理；
+另一种是背景固定，元素不做特殊处理。{talk about when to use either technique}。
 
+我们在这里使用第二种实现方式，在 `body` 元素中使背景固定。
+
+[固定背景 Demo](demo/background-cover.html)
+
+* HTML
 ```html
 <body>
-  <div class="container">
-    <!-- element1 -->
-    <!-- element2 -->
-    <!-- element... -->
-  </div>
 </body>
 ```
 
-`.container`元素的宽度设置为页面内容的宽度，如 `960px`，并使其居中：`margin: 0 auto`。元素居中的部分会在下面介绍头像居中时介绍。使用外包围框的好处是不需要再为每个元素设置高度，block 元素的默认宽度是充满父容器宽度，所以只需要调整外包围框的宽度即可改变内部所有元素的宽度，为之后响应式布局提供了方便。
+* CSS
+```css
+body {
+    background-image: url(http://uploads.striking.ly/page/images/backgrounds/bg5.jpg);
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
+```
 
-## 第四步 头像
+实现原理：
+
++ `background-attachment: fixed` 使背景图不随页面的滚动而滚动
+  + [Can I Use: background-attachment](http://caniuse.com/#feat=background-attachment)
+  + [MDN: background-attachment](https://developer.mozilla.org/zh-CN/docs/CSS/background-attachment)
+
+* `background-size: cover` 使背景图始终填满整个屏幕
+  + [Can I Use: background-size](http://caniuse.com/#search=background-size)
+  + [MDN: background-size](https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-size)
+
++ `background-position: center;` 使背景图居中
+  + [Can I Use: background-position](http://caniuse.com/#search=background-position)
+  + [MDN: background-position](https://developer.mozilla.org/zh-CN/docs/CSS/background-position)
+
+更多关于背景的知识: [Backgrounds In CSS: Everything You Need To Know](http://www.smashingmagazine.com/2009/09/02/backgrounds-in-css-everything-you-need-to-know/)
+
+### 练习 - 固定背景
+
+使用 `CSS3 固定背景` 技巧为你的主页加上背景图：
+
+![](done-background.jpg)
+
+# 居中外包围框
+
+我们接下来要为页面的内容加上一个外包围框。这个页面的外包围框有几个作用：
+
+1. 居中内容
+1. 围框里所有 block 元素的默认宽度是充满父容器的宽度，不需要个别为每个元素设置宽度。
+
+我们之后支持响应式布局只需要调整外包围框的宽度即可改变内部所有元素的宽度，非常方便。
+
+### CSS 技巧 - 居中外包围框
+
+[居中外包围框 Demo](demo/fixed-width-container.html)
+
+![](demo-fixed-width-container.jpg)
+
+* HTML:
+  ```html
+  <body>
+    <div class="container">
+      <!-- element1 -->
+      <!-- element2 -->
+      <!-- element... -->
+    </div>
+  </body>
+  ```
+
+* CSS:
+  ```css
+  .container {
+    width: 960px;
+    margin: 0 auto;
+  }
+  ```
+
+实现原理：
+
++ `width: 960px` 设置外包围框的宽度。
++ `margin: 0 auto` 让浏览器自动计算左右 margin，使外包围框居中。
+  + 这个居中技巧只限于有设置宽度的容器。
+
+你常常会看到网页选择 960px 这个宽度，这是因为 一般浏览器是 1024 宽，加上滚动条就是 1000-1004，
+所以网页的宽度都是小于 1000。而 960 是 1000 以内公约数最多的数字，方便做 grid。
+
+### 练习 - 居中外包围框
+
+把内容加上居中外包围框。实现效果为：
+
+![](done-container.jpg)
+
+# 头部容器
 
 这个页面中的头像有两个特点，一个是在容器中居中，一个是向上移出头部容器。
+
 首先我们实现 header 部分。header 包含的内容为：
 
 ![](DraggedImage-1.png)
 
-除了头像部分外其余均比较简单，这里是给出 HTML 代码，对应的 CSS 大家请自行实现：
+不同显示类型的 HTML 元素需要使用不同的居中技巧。HTML 元素可以简单地分为两大类。
 
-```html
-<body>
-  <div class="container">
-    <header class="main-header">
-      <img class="main-header__avatar" src="http://tengbao.me/images/teng.jpg" alt="">
-      <h1>Hi, I'm Teng Bao</h1>
-    </header>
+1. [块级元素](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Block-level_elements) -
+  + p, div, h1, h2, table, ol 等等
+2. [行元素](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Inline_elemente) - 在文字流里面显示，浏览器不会添加空行。默认宽度刚好适应内容。
+  + span, img, a, button, input 等等
+
+我们来看看浏览器怎么渲染这两种不同类型的元素：
+
+* 灰色背景是块级元素。浏览器会在块级元素前后增加空行。这些元素的默认宽度会填满父容器。
+
+* 红色背景是行元素，他们的宽度刚好适应内容，而且不会照成断行。
+
+![](demo-display-type.jpg)
+
+我们现在就来看看怎么居中这两种元素。
+
+### CSS 技巧 - 居中元素
+
++ HTML:
+  ```html
+  <!-- This is an image, with display set to 'block' in CSS.
+       Centered by setting left/right margin.to auto.
+  -->
+  <img src="whales.png" class="centered-image"/>
+
+  <div class="centered-container">
+    <!-- All inline elements are centered in this container. -->
+    <h1>Moby Dick</h1>
+    <img src="whales.png"/>
   </div>
-</body>
-```
+  ```
 
-效果如下所示：
++ CSS:
 
-![](DraggedImage-2.png)
+  ```css
+  .centered-image {
+    display: block;
+    width: 25%;
+    margin: 0 auto;
+  }
 
-上面介绍 `.container` 居中时没有展开介绍 CSS 中元素居中的方法，这里专门介绍一下。CSS 元素可以简单地分为两大类，块元素和行元素。要块元素，可以设置其 `margin-left` 和 `margin-right` 均为 `auto` 即可。对于行元素则要设置其父元素的 `text-align` 为 `center`。具体可以参考：[CENTERING THINGS](http://www.w3.org/Style/Examples/007/center)。这样只需要知道 img 元素属于块元素还是行元素就可以了，可以通过如下两个链接了解：
+  .centered-container {
+    text-align: center;
+  }
+  ```
 
-[Block-level elements](https://developer.mozilla.org/en-US/docs/Web/HTML/Block-level_elements)
+[居中元素 Demo](demo/horizontal-centering.html)
 
-[Inline elements](https://developer.mozilla.org/en-US/docs/Web/HTML/Inline_elemente)
+![](demo-horizontal-centering.jpg)
 
-最终效果如下所示：
+实现原理：
 
-![](DraggedImage-3.png)
++ `display: block` 把行元素变成块元素
++ `margin: 0 auto;` 居中块元素
+  + 元素一定要有 `width` 属性
++ `text-align: center;` 通过容器来居中行元素
 
-## 第五步 主导航
+使用 `text-align` 居中必须经过一个元素的父元素来居中，这会影响在这个容器里所有的元素。
+在前面这个例子你可以看到不只是图片居中了, h1 和 p 里面的文字也被居中了。
 
-前几步一节没有专门介绍实现页面中的一个模块的步骤，具体来讲分如下几步：
+如果你想要居中一个行元素（比如图片），但不影响同个容器里面的其他元素，那你可以选择把它设定为块元素来居中。
 
-1. 了解模块在页面中的职能；
-2. 编写 HTML 代码；
-3. 观察模块的布局特点；
-4. 编写 CSS 代码。
+### 练习 - 实现头部容器
 
-其中第一步了解模块的职能，也即语义。从而确定应该使用哪种 HTML 标签来实现它。如一个导航模块，就应该使用 `nav`；一个文章模块，就应该使用 `article`；一个头部模块，就应该使用 `header`；一个无编号列表模块，就应该使用 `ul` 等等。
-接下来第二步是根据模块的语义和内容来编写对应的 HTML 代码。这一步非常容易犯的错误是把语义和样式混淆，下面我们通过实现主导航的 HTML 代码来实践这一过程。
-主导航的样式如下：
+1. 布局：
+  + 设定头部容器的背景
+    + `background-image: url(../img/banner.jpg);`
+  + 居中头像和 h1 标题。把头像的 img 元素设定为块元素
 
-![](DraggedImage-4.png)
+2. 字体风格：
+  + 引用 [Google Fonts](https://www.google.com/fonts#UsePlace:use/Collection:Open+Sans) 提供的 Open Sans 字体
+  + 调整 字体 属性
+  ```css
+  font-weight: 300;
+  font-size: 50px;
+  font-family: 'Open Sans','helvetica',arial,sans-serif;
+  text-shadow: 0 1px rgba(0,0,0,0.3);
+  ```
 
-首先对于导航模块，需要使用 `nav` 标签。而导航内部有五个链接，这五个链接可以看做一个无编号列表。所以可以很容易地编写出对应的 HTML 代码：
+3. 头像修饰
+  + 给头像加阴影
+    + `box-shadow: 0 0px 2px 1px rgba(0,0,0,0.2);`
+  + 把头像变成圆形
+    + `border-radius: 999px`
 
-```html
-<nav class="main-nav">
-  <ul>
-    <li><a href="#">Work</a></li>
-    <li><a href="#">Experience</a></li>
-    <li><a href="#">Photos</a></li>
-    <li><a href="#">Contact</a></li>
-  </ul>
-</nav>
-```
 
-不过对于模块语义的理解不同人会不一样，比如导航内的五个链接并不一定非要认为是一个无编号列表，也可以简单地将他们看做五个 `a` 标签的堆叠，从而对应的代码为：
+成果看起来这样的：
 
-```html
-<nav class="main-nav">
-  <a href="#">Work</a>
-  <a href="#">Experience</a>
-  <a href="#">Photos</a>
-  <a href="#">Contact</a>
-</nav>
-```
+![](done-centering-header-elements.jpg)
 
-但总体上使用的标签不能和语义本身偏离太多，如这里使用 `footer` 标签肯定是不好的。另外新手容易滥用 `div` 标签，需要注意的是只有模块本身没有明确的语义或者用现有的标签无法准确描述其语义时才应使用。
+# 调整元素间距
 
-前文说过非常容易犯的错误是把语义和样式混淆，对应到这里的例子就是图中链接的文字都是全大写的，而我们编写的 HTML 标签应该是用常规的写法。这是因为“全大写”是样式范畴，而非文本语义的范畴。区分某个效果是否是样式范畴的方法很简单：设想你准备给这个网站改版换个样式，那么这个效果会不会随着改版而改变呢？很容易知道，当网站改版时，这个导航中的文字很可能又恢复成首字母大写，所以这个效果属于样式范畴。至于如何使用 CSS 来实现文本的大小写变换就留个同学们自行查阅了。
+虽然我们头部容器的元素已经居中了，它们的位置还是不太对。
 
-有了 HTML 代码，接下来我们就可以观察模块的样式并实现对应的 CSS 了。我们先来概括主导航条的布局特点：
+![](problem-header-h1-excess-margin-top.jpg)
 
-1. 4个链接在同一行显示；
-2. 4个链接的内容居中显示。
+### CSS 技巧 - 用 margin 调整间距
 
-这里以第一份 HTMl 为准。首先4个链接在同一行显示，我们很容易想到可以通过行元素或者浮动元素实现，而我们使用的 `li` 元素是块元素，所以我们要设置其 `display` 属性为 `inline` 来使其成为行元素。接下来居中的实现方法大家应该已经知道，这里就不再赘述了。
-其余的样式修改比较简单，大家可以自己动手试试。只需要注意的是 `ul` 元素默认会有 `list-style` 和 `margin`, `padding`，记得清除即可。最后效果如下：
+我们要用 margin 来指定元素直接的间距。在这个例子我们让一个容器里的每个元素之间有 50px 的间距。元素和容器也有 50px 的间距。
 
-![](DraggedImage-5.png)
+![](demo-prevent-margin-collapse.jpg)
 
-这时我们发现导航条的内容没有内边距，给 `li` 加上 `padding: 10px` 后发现只有左右边距变化了，而上下边距依然没有。这是因为行元素只能设置其左右内边距和外边距，而不能设置其高度和上下内外边距。如果想设置高度的话就要使用块元素了，但块元素没有办法实现整体居中效果。这时可以使用 `inline-block`，`inline-block` 元素可以简单理解为对外表现为行元素，而对内表现为块元素。这样问题就迎刃而解了，效果如下：
+[Demo 用 margin 调整间距](demo/prevent-margin-collapse.html)
 
-![](DraggedImage-6.png)
++ HTML:
+  ```html
+  <div class='container'>
+    <p>block 1</p>
+    <p>block 1</p>
+    <p>block 2</p>
+  </div>
+  ```
 
-具体的字号字体会和目标页面不太一样，如果大家有兴趣可以认真模仿下。CSS 中最难的部分不在于字号、阴影这样的样式，而在于布局的方法，这也是这篇教程主要想介绍的。
++ CSS:
+  ```css
+  .container {
+    background-color: #D8D8D8;
+    padding: 1px;
+  }
 
-## 第六步 实现小节
+  .container p {
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
+  ```
 
-接下来我们来实现页面下面的部分。还是按照第五步介绍的流程，可以看到接下来是由很多结构和职能相似的模块组成，对于这样有内在相关性的内容，我们可以使用 `section` 来实现。`section`、`div` 和 `article` 的差别可以参见 [HTML5 中 div section article 的区别](http://www.qianduan.net/html5-differences-in-the-div-section-article/)。
-我们以第一个小节为例：
++ `margin-top: 50px` 和 `margin-bottom: 50px` 设定间距
++ `padding: 1px` 禁止 .container 折叠间距
 
-![](DraggedImage-7.png)
+在 .container 上面加上的 `padding: 1px` 有点神奇。假如我们没有加上这个 `padding: 1px`，你会发现效果变成了这样：
 
-页面顶部是一个标题、一个分隔符和一个描述。可以使用如下 HTML 实现：
+![](demo-margin-collapse.jpg)
 
-```html
-<section class="info-section whatido">
-  <header>
-    <h2>What I Do</h2>
-    <p class="info-section__description">I'm Teng. I design and develop things on the web. Oh, and I like curry.</p>
-  </header>
-  <ul class="whatido__skill-list">
-    <li>
-      <h3>Code</h3>
-      <p>I like building things on the web. I've built games, tools, and web apps.</p>
-    </li>
-    <li>
-      <h3>Design / UX</h3>
-      <p>I like creating happiness by making things look good and work well.</p>
-    </li>
-    <li>
-      <h3>Product</h3>
-      <p>I like taking products from idea to reality to users and beyond!</p>
-    </li>
-  </ul>
-</section>
-```
+这是因为容器本身的 margin-top 会和第一个子元素的 margin-top 折叠在一起。在容器和 `top` 这个字符之间的空白其实是 子元素的 margin-top。同样的，父元素的 margin-bottom 会和最后一个子元素的 margin-bottom 也折叠一起了。
 
-其中需要注意的：
+有关 margin 折叠的细节和用法可以看 [
+Collapsing Margins](http://www.sitepoint.com/web-foundations/collapsing-margins/)
 
-1. 文字的拼写。虽然效果图中的文字都是全大写的，但是写在 HTML 里一定要根据实际的写法写（如 `Design/UX`）；
-2. 合理的区域划分。标题和描述统一作为小节的头部用 `header` 包裹，这样更加利于模块的重用。与模块重用紧密相关的另一个话题就是 CSS 样式命名，这里使用了 BEM 命名方法，会在之后的正式课程详细介绍。大家有兴趣提前了解的话可以简单参考：[BEM思想之彻底弄清BEM语法](http://www.w3cplus.com/css/mindbemding-getting-your-head-round-bem-syntax.html)。
+### 练习 - 调整头部容器里头像和标题的间距
 
-另外标题下面的分隔符这里并没有占用单独的标签，因为分隔符属于样式范畴（想想改版时分隔符可能就会去掉），可以使用 `h2` 标签的 `:after` 伪元素来实现，这样可以使得 HTML 更加语义化。然而这只是理想化的实现方法，因为 `:after` 并不兼容所有浏览器（还记得怎么查看 CSS 的兼容性吗？），所以如果有兼容旧浏览器的要求，是可以使用一个单独的元素实现分隔符的，因为实现起来非常简单，这里不再介绍。
+1. 头像
+  + 用 `margin-top: -70px` 把它往上调
+  + `margin-bottom: 10px`
 
-另外底下的三个技能可以使用 `float` 使其向左浮动起来，并设置每个元素的宽度为 `33.3%`。但是有个问题是每个元素都有一个边距，如果设置边距的话宽度就会超过父元素的三分之一，这是因为边距的大小是算在宽度外的。这时可以使用 `box-sizing` 来解决这个问题，具体可以参考：[box-sizing](http://zh.learnlayout.com/box-sizing.html)。
+2. 标题
+  + `margin-bottom: 20px`
 
-接下来的内容就很简单了，几个元素的居中大家应该已经熟练掌握了。三个技能图片应该使用背景图片而非 `img` 元素。至于何时使用背景何时使用 `img` 元素，判断方法与上面的类似：思考改版时图片是否会改变。
+实现后的效果像这样：
+
+![](done-header.jpg)
+
+# Part 1 - 总结
+
+在这个课程的 Part 1 你学会了如何使用 CSS 设计模型来实现一些简单的页面布局：
+
++ 实现固定的背景
++ 实现一个居中容器，包围所有内容
++ 横向居中的两个技巧
++ 用 margin 调整间隔。如何解决 margin collapse 的问题
+
+接下来在 Part 2 我们会来继续用 CSS 设计模型来实现这个页面的其他设计元素：
+
++ 如何实现导航
+  ![](page-menu.jpg)
++ 如何用 border-box 来布局同等宽度的内容块
+  ![](page-what-i-do.jpg)
+
+在做练习的时候你也许有注意到我们 css 类型的命名方法有点奇葩：
+
++ 头部容器的类型为：`main-header`
++ 头部容器里面的头像为：`main-header__avatar`
+
+为什么不直接给里面的头像命名为 `avatar`, 然后在 CSS 里面用 `.main-header .avatar`
+来选择这个元素呢？我们在 Part 2 会解释，并介绍 HTML/CSS 的一些最佳实践原则。
+
+# 课程发布提醒
+
+喜欢这个课程吗？下个课程发布的时候不要漏掉了！
+
+现在就去[订阅课程](http://besike.com)~
