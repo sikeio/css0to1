@@ -383,6 +383,6 @@ Collapsing Margins](http://www.sitepoint.com/web-foundations/collapsing-margins/
 
 # 课程发布提醒
 
-喜欢这个课程吗？下个课程发布的时候不要漏掉了！
+喜欢这个课程吗？下个课程发布的时候不要漏掉！
 
-现在就去[订阅课程](http://besike.com)~
+现在就去[订阅邮件](http://besike.com)，新课程出来的时候我们会用邮件提醒你。
