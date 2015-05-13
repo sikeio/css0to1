@@ -21,3 +21,8 @@
 
 #lesson[day=1 name=taking-the-first-step project=profile]
 
+#lesson[day=2 name=navigation-and-content project=profile]
+
+#lesson[day=3 name=make-responsive project=profile]
+
+#lesson[day=4 name=animation project=profile]
