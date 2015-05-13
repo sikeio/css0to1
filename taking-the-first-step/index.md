@@ -250,34 +250,37 @@ body {
 
 ### 练习 - 实现头部容器
 
-1. 布局：
-  + 设定头部容器的背景
-    + `background-image: url(../img/banner.jpg);`
-  + 居中头像和 h1 标题。把头像的 img 元素设定为块元素
+**1. 布局：**
 
-2. 字体风格：
-  + 引用 [Google Fonts](https://www.google.com/fonts#UsePlace:use/Collection:Open+Sans) 提供的 Open Sans 字体
-  ```
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
-  ```
-  在中国 Google Fonts 可以引用 [360 前端公共库](http://libs.useso.com/)提供的镜像。
-  ```
-  <link href='http://fonts.useso.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
-  ```
++ 设定头部容器的背景
+  + `background-image: url(../img/banner.jpg);`
++ 居中头像和 h1 标题。把头像的 img 元素设定为块元素
 
-  + 调整 字体 属性
-  ```css
-  font-weight: 300;
-  font-size: 50px;
-  font-family: 'Open Sans','helvetica',arial,sans-serif;
-  text-shadow: 0 1px rgba(0,0,0,0.3);
-  ```
+**2. 字体风格：**
 
-3. 头像修饰
-  + 给头像加阴影
-    + `box-shadow: 0 0px 2px 1px rgba(0,0,0,0.2);`
-  + 把头像变成圆形
-    + `border-radius: 999px`
++ 引用 [Google Fonts](https://www.google.com/fonts#UsePlace:use/Collection:Open+Sans) 提供的 Open Sans 字体
+```
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+```
+在中国 Google Fonts 可以引用 [360 前端公共库](http://libs.useso.com/)提供的镜像。
+```
+<link href='http://fonts.useso.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+```
+
++ 调整 字体 属性
+```css
+font-weight: 300;
+font-size: 50px;
+font-family: 'Open Sans','helvetica',arial,sans-serif;
+text-shadow: 0 1px rgba(0,0,0,0.3);
+```
+
+**3. 头像修饰**
+
++ 给头像加阴影
+  + `box-shadow: 0 0px 2px 1px rgba(0,0,0,0.2);`
++ 把头像变成圆形
+  + `border-radius: 999px`
 
 
 成果看起来这样的：
