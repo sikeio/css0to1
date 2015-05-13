@@ -1,0 +1,381 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="github-markdown.css"/>
+    <style type="text/css">
+      .content {
+        width: 960px;
+        margin: 0 auto;
+      }
+
+      .content img {
+        display: block;
+        margin: 0 auto;
+
+        border: 1px solid #DADADA;
+        padding: 20px;
+
+      }
+    </style>
+  </head>
+
+  <body>
+  <div class="markdown-body content">
+
+<h1 id="-0-1-">从 0 到 1 实现响应式个人网站</h1>
+<p>对于很多不擅长前端的程序员来说，写 CSS 是一件很痛苦的事情。虽然你了解了 CSS 的基本原理，真的去实现一个设计却发现其实不是那么简单，毕竟还是 too young。</p>
+<p>CSS 有很多坑。同样的属性在不同的环境，或者使用在不同的元素上，都有可能产生完全不同的效果。 明明设定了间隔，为什么在某些情况却不生效？为什么 float 把我的布局打乱了？为什么 <code>text-align: center</code> 不能居中某个元素？</p>
+<p>很多时候写 CSS 感觉像是在碰运气。浏览器渲染出来不是你要的效果，也不知道为什么，就只能瞎调属性。姿势就对了，浏览器就会给我们正确的效果。</p>
+<p>前端大牛工作的方法不一样。他们不在个别属性的层面思考。看到一个需求，他们能直接匹配一个适用的 “CSS Design Pattern”。用设计模式，他们能更快的实现一个页面，减少浪费在调试的时间。</p>
+<p>在这个 CSS 教程，我们要模仿 Strikingly 实现一个响应式个人网站：</p>
+<p><img src="stringkinly-profile.jpg" alt=""></p>
+<p>该页面可以在此访问： <a href="http://profile-sample.strikingly.com/">http://profile-sample.strikingly.com/</a>，</p>
+<p>这个教程和其他教程不一样，我们不提供可以工作的代码。我们会按需求介绍 “CSS 设计模式” 给你认识，而你必须自己去尝试把这些概念应用在一个真正的页面上。</p>
+<p>请你打开你忠实的编辑器，边看边做！</p>
+<h1 id="-">使用代码样板</h1>
+<p>从零开始写一个页面，绝大多数情况下我们都需要一个代码样板来帮我们快速开始，避免重复的工作。这个样板至少会包括以下内容：</p>
+<ol>
+<li>设置 doctype</li>
+<li>设置页面编码</li>
+<li>引入初始化 css</li>
+</ol>
+<p>作为一个前端开发者，你应该维护好一份适合自己的代码样板，使得日后自己的每个项目都可以以此来初始化。下面是一份我常用的样板：</p>
+<pre><code class="lang-html">&lt;!--
+HTML5. Use tags like &lt;article&gt;, &lt;section&gt;, etc.
+See: http://www.sitepoint.com/web-foundations/doctypes/
+--&gt;
+&lt;!doctype html&gt;
+
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+
+    &lt;!--
+    Ask IE to behave like a modern browser
+    See: https://www.modern.ie/en-us/performance/how-to-use-x-ua-compatible
+    --&gt;
+    &lt;meta http-equiv=&quot;x-ua-compatible&quot; content=&quot;ie=edge&quot;&gt;
+
+    &lt;title&gt;My Site&lt;/title&gt;
+
+    &lt;!--
+    Disables zooming on mobile devices.
+    --&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;
+
+    &lt;!--
+    Stylesheet that minimizes browser differences.
+    See: http://necolas.github.io/normalize.css/
+    --&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;css/normalize.css&quot;&gt;
+
+    &lt;!--
+    Our own stylesheet.
+    --&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;css/main.css&quot;&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    put content here
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>在这个简单的样板我们做了挺多事：</p>
+<ul>
+<li>指定使用 HTML5 语法</li>
+<li>要求 IE 遵守现代浏览器的渲染标准</li>
+<li>锁死页面在移动设备显示宽度</li>
+<li>引入了 <a href="http://necolas.github.io/normalize.css">normalize.css</a>, 在默认的HTML元素样式上提供了跨浏览器的高度一致性</li>
+</ul>
+<blockquote>
+<p><strong>提示</strong>: 如果你之前在使用 reset.css 来完成同样的事情，请迁移到 normalize.css。关于他们之间的差异可以参考：</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/6887336/what-is-the-difference-between-normalize-css-and-reset-css">英文：What is the difference between Normalize.css and Reset CSS</a></li>
+<li><a href="http://jerryzou.com/posts/aboutNormalizeCss/">中文：来，让我们谈一谈 Normalize.css</a></li>
+</ul>
+</blockquote>
+<p>请你克隆这个课程的样板：</p>
+<pre><code>git clone https://github.com/hayeah/fork2-css-lesson-starter.git
+</code></pre><p>点击 <code>index.html</code> 打开页面。</p>
+<h1 id="-">设置固定背景</h1>
+<p>滚动页面时可以发现：</p>
+<ol>
+<li>页面的背景是固定的，不随页面的滚动而滚动</li>
+<li>同时放大和缩小窗口可以发现页面背景也会随之放大和缩小</li>
+</ol>
+<p>首先我们就来实现这个固定背景。</p>
+<p>MDN 和 Can I Use 这两个网站在前端开发中非常重要，在使用 CSS3 属性的时候一定要养成查阅的习惯, 确认你的目标浏览器有支持。</p>
+<h3 id="css-">CSS 样板 - 固定背景</h3>
+<p>背景固定有两种实现方式，一种是元素 fixed，其背景不做特殊处理；
+另一种是背景固定，元素不做特殊处理。{talk about when to use either technique}。</p>
+<p>我们在这里使用第二种实现方式，在 <code>body</code> 元素中使背景固定。</p>
+<p><a href="demo/background-cover.html">固定背景 Demo</a></p>
+<ul>
+<li><p>HTML</p>
+<pre><code class="lang-html">&lt;body&gt;
+&lt;/body&gt;
+</code></pre>
+</li>
+<li><p>CSS</p>
+<pre><code class="lang-css">body {
+  background-image: url(http://uploads.striking.ly/page/images/backgrounds/bg5.jpg);
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+}
+</code></pre>
+</li>
+</ul>
+<p>实现原理：</p>
+<ul>
+<li><p><code>background-attachment: fixed</code> 使背景图不随页面的滚动而滚动</p>
+<ul>
+<li><a href="http://caniuse.com/#feat=background-attachment">Can I Use: background-attachment</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/CSS/background-attachment">MDN: background-attachment</a></li>
+</ul>
+</li>
+<li><p><code>background-size: cover</code> 使背景图始终填满整个屏幕</p>
+<ul>
+<li><a href="http://caniuse.com/#search=background-size">Can I Use: background-size</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-size">MDN: background-size</a></li>
+</ul>
+</li>
+<li><p><code>background-position: center;</code> 使背景图居中</p>
+<ul>
+<li><a href="http://caniuse.com/#search=background-position">Can I Use: background-position</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/CSS/background-position">MDN: background-position</a></li>
+</ul>
+</li>
+</ul>
+<p>更多关于背景的知识: <a href="http://www.smashingmagazine.com/2009/09/02/backgrounds-in-css-everything-you-need-to-know/">Backgrounds In CSS: Everything You Need To Know</a></p>
+<h3 id="-">练习 - 固定背景</h3>
+<p>使用 <code>CSS3 固定背景</code> 技巧为你的主页加上背景图：</p>
+<p><img src="done-background.jpg" alt=""></p>
+<h1 id="-">居中外包围框</h1>
+<p>我们接下来要为页面的内容加上一个外包围框。这个页面的外包围框有几个作用：</p>
+<ol>
+<li>居中内容</li>
+<li>围框里所有 block 元素的默认宽度是充满父容器的宽度，不需要个别为每个元素设置宽度。</li>
+</ol>
+<p>我们之后支持响应式布局只需要调整外包围框的宽度即可改变内部所有元素的宽度，非常方便。</p>
+<h3 id="css-">CSS 技巧 - 居中外包围框</h3>
+<p><a href="demo/fixed-width-container.html">居中外包围框 Demo</a></p>
+<p><img src="demo-fixed-width-container.jpg" alt=""></p>
+<ul>
+<li><p>HTML:</p>
+<pre><code class="lang-html">&lt;body&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;!-- element1 --&gt;
+    &lt;!-- element2 --&gt;
+    &lt;!-- element... --&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+</code></pre>
+</li>
+<li><p>CSS:</p>
+<pre><code class="lang-css">.container {
+  width: 960px;
+  margin: 0 auto;
+}
+</code></pre>
+</li>
+</ul>
+<p>实现原理：</p>
+<ul>
+<li><code>width: 960px</code> 设置外包围框的宽度。</li>
+<li><code>margin: 0 auto</code> 让浏览器自动计算左右 margin，使外包围框居中。<ul>
+<li>这个居中技巧只限于有设置宽度的容器。</li>
+</ul>
+</li>
+</ul>
+<p>你常常会看到网页选择 960px 这个宽度，这是因为 一般浏览器是 1024 宽，加上滚动条就是 1000-1004，
+所以网页的宽度都是小于 1000。而 960 是 1000 以内公约数最多的数字，方便做 grid。</p>
+<h3 id="-">练习 - 居中外包围框</h3>
+<p>把内容加上居中外包围框。实现效果为：</p>
+<p><img src="done-container.jpg" alt=""></p>
+<h1 id="-">头部容器</h1>
+<p>这个页面中的头像有两个特点，一个是在容器中居中，一个是向上移出头部容器。</p>
+<p>首先我们实现 header 部分。header 包含的内容为：</p>
+<p><img src="DraggedImage-1.png" alt=""></p>
+<p>不同显示类型的 HTML 元素需要使用不同的居中技巧。HTML 元素可以简单地分为两大类。</p>
+<ol>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Block-level_elements">块级元素</a> -<ul>
+<li>p, div, h1, h2, table, ol 等等</li>
+</ul>
+</li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Inline_elemente">行元素</a> - 在文字流里面显示，浏览器不会添加空行。默认宽度刚好适应内容。<ul>
+<li>span, img, a, button, input 等等</li>
+</ul>
+</li>
+</ol>
+<p>我们来看看浏览器怎么渲染这两种不同类型的元素：</p>
+<ul>
+<li><p>灰色背景是块级元素。浏览器会在块级元素前后增加空行。这些元素的默认宽度会填满父容器。</p>
+</li>
+<li><p>红色背景是行元素，他们的宽度刚好适应内容，而且不会照成断行。</p>
+</li>
+</ul>
+<p><img src="demo-display-type.jpg" alt=""></p>
+<p>我们现在就来看看怎么居中这两种元素。</p>
+<h3 id="css-">CSS 技巧 - 居中元素</h3>
+<ul>
+<li><p>HTML:</p>
+<pre><code class="lang-html">&lt;!-- This is an image, with display set to &#39;block&#39; in CSS.
+     Centered by setting left/right margin.to auto.
+--&gt;
+&lt;img src=&quot;whales.png&quot; class=&quot;centered-image&quot;/&gt;
+
+&lt;div class=&quot;centered-container&quot;&gt;
+  &lt;!-- All inline elements are centered in this container. --&gt;
+  &lt;h1&gt;Moby Dick&lt;/h1&gt;
+  &lt;img src=&quot;whales.png&quot;/&gt;
+&lt;/div&gt;
+</code></pre>
+</li>
+<li><p>CSS:</p>
+<pre><code class="lang-css">.centered-image {
+  display: block;
+  width: 25%;
+  margin: 0 auto;
+}
+
+.centered-container {
+  text-align: center;
+}
+</code></pre>
+</li>
+</ul>
+<p><a href="demo/horizontal-centering.html">居中元素 Demo</a></p>
+<p><img src="demo-horizontal-centering.jpg" alt=""></p>
+<p>实现原理：</p>
+<ul>
+<li><code>display: block</code> 把行元素变成块元素</li>
+<li><code>margin: 0 auto;</code> 居中块元素<ul>
+<li>元素一定要有 <code>width</code> 属性</li>
+</ul>
+</li>
+<li><code>text-align: center;</code> 通过容器来居中行元素</li>
+</ul>
+<p>使用 <code>text-align</code> 居中必须经过一个元素的父元素来居中，这会影响在这个容器里所有的元素。
+在前面这个例子你可以看到不只是图片居中了, h1 和 p 里面的文字也被居中了。</p>
+<p>如果你想要居中一个行元素（比如图片），但不影响同个容器里面的其他元素，那你可以选择把它设定为块元素来居中。</p>
+<h3 id="-">练习 - 实现头部容器</h3>
+<ol>
+<li><p>布局：</p>
+<ul>
+<li>设定头部容器的背景<ul>
+<li><code>background-image: url(../img/banner.jpg);</code></li>
+</ul>
+</li>
+<li>居中头像和 h1 标题。把头像的 img 元素设定为块元素</li>
+</ul>
+</li>
+<li><p>字体风格：</p>
+<ul>
+<li>引用 <a href="https://www.google.com/fonts#UsePlace:use/Collection:Open+Sans">Google Fonts</a> 提供的 Open Sans 字体</li>
+<li>调整 字体 属性<pre><code class="lang-css">font-weight: 300;
+font-size: 50px;
+font-family: &#39;Open Sans&#39;,&#39;helvetica&#39;,arial,sans-serif;
+text-shadow: 0 1px rgba(0,0,0,0.3);
+</code></pre>
+</li>
+</ul>
+</li>
+<li><p>头像修饰</p>
+<ul>
+<li>给头像加阴影<ul>
+<li><code>box-shadow: 0 0px 2px 1px rgba(0,0,0,0.2);</code></li>
+</ul>
+</li>
+<li>把头像变成圆形<ul>
+<li><code>border-radius: 999px</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p>成果看起来这样的：</p>
+<p><img src="done-centering-header-elements.jpg" alt=""></p>
+<h1 id="-">调整元素间距</h1>
+<p>虽然我们头部容器的元素已经居中了，它们的位置还是不太对。</p>
+<p><img src="problem-header-h1-excess-margin-top.jpg" alt=""></p>
+<h3 id="css-margin-">CSS 技巧 - 用 margin 调整间距</h3>
+<p>我们要用 margin 来指定元素直接的间距。在这个例子我们让一个容器里的每个元素之间有 50px 的间距。元素和容器也有 50px 的间距。</p>
+<p><img src="demo-prevent-margin-collapse.jpg" alt=""></p>
+<p><a href="demo/prevent-margin-collapse.html">Demo 用 margin 调整间距</a></p>
+<ul>
+<li><p>HTML:</p>
+<pre><code class="lang-html">&lt;div class=&#39;container&#39;&gt;
+  &lt;p&gt;block 1&lt;/p&gt;
+  &lt;p&gt;block 1&lt;/p&gt;
+  &lt;p&gt;block 2&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+</li>
+<li><p>CSS:</p>
+<pre><code class="lang-css">.container {
+  background-color: #D8D8D8;
+  padding: 1px;
+}
+
+.container p {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+</code></pre>
+</li>
+<li><p><code>margin-top: 50px</code> 和 <code>margin-bottom: 50px</code> 设定间距</p>
+</li>
+<li><code>padding: 1px</code> 禁止 .container 折叠间距</li>
+</ul>
+<p>在 .container 上面加上的 <code>padding: 1px</code> 有点神奇。假如我们没有加上这个 <code>padding: 1px</code>，你会发现效果变成了这样：</p>
+<p><img src="demo-margin-collapse.jpg" alt=""></p>
+<p>这是因为容器本身的 margin-top 会和第一个子元素的 margin-top 折叠在一起。在容器和 <code>top</code> 这个字符之间的空白其实是 子元素的 margin-top。同样的，父元素的 margin-bottom 会和最后一个子元素的 margin-bottom 也折叠一起了。</p>
+<p>有关 margin 折叠的细节和用法可以看 <a href="http://www.sitepoint.com/web-foundations/collapsing-margins/">
+Collapsing Margins</a></p>
+<h3 id="-">练习 - 调整头部容器里头像和标题的间距</h3>
+<ol>
+<li><p>头像</p>
+<ul>
+<li>用 <code>margin-top: -70px</code> 把它往上调</li>
+<li><code>margin-bottom: 10px</code></li>
+</ul>
+</li>
+<li><p>标题</p>
+<ul>
+<li><code>margin-bottom: 20px</code></li>
+</ul>
+</li>
+</ol>
+<p>实现后的效果像这样：</p>
+<p><img src="done-header.jpg" alt=""></p>
+<h1 id="part-1-">Part 1 - 总结</h1>
+<p>在这个课程的 Part 1 你学会了如何使用 CSS 设计模型来实现一些简单的页面布局：</p>
+<ul>
+<li>实现固定的背景</li>
+<li>实现一个居中容器，包围所有内容</li>
+<li>横向居中的两个技巧</li>
+<li>用 margin 调整间隔。如何解决 margin collapse 的问题</li>
+</ul>
+<p>接下来在 Part 2 我们会来继续用 CSS 设计模型来实现这个页面的其他设计元素：</p>
+<ul>
+<li>如何实现导航
+<img src="page-menu.jpg" alt=""></li>
+<li>如何用 border-box 来布局同等宽度的内容块
+<img src="page-what-i-do.jpg" alt=""></li>
+</ul>
+<p>在做练习的时候你也许有注意到我们 css 类型的命名方法有点奇葩：</p>
+<ul>
+<li>头部容器的类型为：<code>main-header</code></li>
+<li>头部容器里面的头像为：<code>main-header__avatar</code></li>
+</ul>
+<p>为什么不直接给里面的头像命名为 <code>avatar</code>, 然后在 CSS 里面用 <code>.main-header .avatar</code>
+来选择这个元素呢？我们在 Part 2 会解释，并介绍 HTML/CSS 的一些最佳实践原则。</p>
+<h1 id="-">课程发布提醒</h1>
+<p>喜欢这个课程吗？下个课程发布的时候不要漏掉了！</p>
+<p>现在就去<a href="http://besike.com">订阅课程</a>~</p>
+
+
+</div>
+  </body>
+</html>
