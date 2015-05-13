@@ -257,6 +257,14 @@ body {
 
 2. 字体风格：
   + 引用 [Google Fonts](https://www.google.com/fonts#UsePlace:use/Collection:Open+Sans) 提供的 Open Sans 字体
+  ```
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+  ```
+  在中国 Google Fonts 可以引用 [360 前端公共库](http://libs.useso.com/)提供的镜像。
+  ```
+  <link href='http://fonts.useso.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+  ```
+
   + 调整 字体 属性
   ```css
   font-weight: 300;
