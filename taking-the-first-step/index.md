@@ -359,16 +359,8 @@ Collapsing Margins](http://www.sitepoint.com/web-foundations/collapsing-margins/
 
 接下来在 Part 2 我们会来继续用 CSS 设计模型来实现这个页面的其他设计元素：
 
-+ 如何实现导航
++ 实现导航
   ![](page-menu.jpg)
-+ 如何用 border-box 来布局同等宽度的内容块
++ 同等宽度的内容块
   ![](page-what-i-do.jpg)
-
-在做练习的时候你也许有注意到我们 css 类型的命名方法有点奇葩：
-
-+ 头部容器的类型为：`main-header`
-+ 头部容器里面的头像为：`main-header__avatar`
-
-为什么不直接给里面的头像命名为 `avatar`, 然后在 CSS 里面用 `.main-header .avatar`
-来选择这个元素呢？我们在 Part 2 会解释，并介绍 HTML/CSS 的一些最佳实践原则。
 

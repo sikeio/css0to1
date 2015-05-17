@@ -1,8 +1,29 @@
 # 实现导航和页面内容
 
+这节课我们的任务是完成导航和第一个内容块的布局。
+
+# 设置全局字体风格
+
+开始之前，我们来调整一下全局的字体：
+
+```css
+body {
+  font-family: 'Open Sans','helvetica',arial,sans-serif;
+  font-weight: 300;
+  color: #62686f;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #333;
+  font-weight: 300;
+}
+```
+
+在下面的练习，我们会按需在各个模块调整字体属性。
+
 # 导航布局的实现思路
 
-我们需要做出这个效果：
+接下来我们要做出这个效果：
 
 ![](nav.jpg)
 
@@ -234,8 +255,8 @@ ul.inline-items li {
 
 .main-nav ul li a {
   color: #fff;
-  font-weight: 300;
   font-size: 0.9rem;
+  font-weight: 300;
   text-transform: uppercase;
   text-decoration: none;
 }
@@ -259,3 +280,338 @@ ul.inline-items li {
 结果：
 
 ![](nav.jpg)
+
+# 准备 "What I Do" 小节
+
+我们现在开始来实现第一个内容小节：
+
+![](section-what-i-do.jpg)
+
+这部分的 HTML 如下：
+
+```html
+<section class="info-section whatido">
+  <header>
+    <h2>What I Do</h2>
+    <p class="info-section__description">I'm Teng. I design and develop things on the web. Oh, and I like curry.</p>
+  </header>
+  <ul class="whatido__skill-list">
+    <li>
+      <h3>Code</h3>
+      <p>I like building things on the web. I've built games, tools, and web apps.</p>
+    </li>
+    <li>
+      <h3>Design / UX</h3>
+      <p>I like creating happiness by making things look good and work well.</p>
+    </li>
+    <li>
+      <h3>Product</h3>
+      <p>I like taking products from idea to reality to users and beyond!</p>
+    </li>
+  </ul>
+</section>
+```
+
+有两点值得注意：
+
+1. `What I Do` 标题下面没有用 hr 或其他元素来显示下划线
+2. 没有用 img 元素来显示这三个技能的图片
+
+和内容无关的装饰性设计元素应该通过 CSS 来实现。下面的练习我们会把图片和下划线加上去。
+
+我们把 `.info-section` 加上白色背景，这样我们才看得清内容：
+
+```css
+.info-section {
+  background-color: #fff;
+}
+```
+
+你会发现 nav 和 info-section 之间有个神奇的空隙：
+
+![](bug-gap-between-info-section-and-nav.jpg)
+
+**练习**： 初步处理 `.info-section` 的小问题。
+
+1. 修复 nav 和 info-section 之间的空隙
+
+  提示: 回想一下第一课提到的 Margin Collapse 问题。
+
+2. 把 `whatido__skill-list` 的列表风格去除
+
+
+结果应该是：
+
+![](done-info-section-ready-to-start.jpg)
+
+# 为每个技能配图
+
+通常一个萝卜一个坑，每个元素在文档流会占据一定的空间，一个接着一个。但有时候有些元素不在文档流里面，比如：
+
+1. 定位的元素 （fixed 或者 absolute 定位）
+2. 飘动元素
+3. CSS 背景图
+
+为了完整地显示这些不在文档流的东西，我们可以用 padding 在一个容器里预留空间。
+
+### CSS 设计模型 - 给文档流以外的东西留空间
+
+在这个示范我们用 CSS 背景给头部容器加上一个鲸鱼商标。
+
+[给文档流以外的东西留空间 Demo](padding-reserve-space.html)
+
+![](padding-reserve-space_html.jpg)
+
+**HTML:**
+
+```html
+<header>
+  <h1>Moby Oil</h1>
+</header>
+```
+
+**CSS:**
+
+```css
+header {
+  /* logo design by Alex Leroy Deval */
+  /* see: https://dribbble.com/shots/833445-Whale-logo-WIP */
+  background-image: url("whale-logo.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  padding-left: 40px;
+}
+```
+
+实现原理:
+
++ `padding-left: 40px` 通常图片的的大小是固定的。左边预留的空间写死就可以了。
+
+### 练习：为每个技能配图
+
+我们可以用 background 来配图，并居中图片：
+
+```css
+.whatido__skill--code {
+  background-image: url(../img/skill-code.png);
+}
+
+.whatido__skill--design {
+  background-image: url(../img/skill-design.png);
+}
+
+.whatido__skill--product {
+  background-image: url(../img/skill-product.png);
+}
+```
+
++ 禁止背景图重复
+  + `background-repeat: no-repeat;`
++ 居中背景图
+  + `background-position: center top;`
++ 元素内部要有住够的空间完整地显示背景图
+
+成果：
+
+![](done-skills-with-icons.jpg)
+
+# 三个技能的布局
+
+实现这个效果我们只需要把夫容器的宽度平均分配给三个同宽的元素即可，也就是说每个元素个占 33.3% 的宽度。
+
+### CSS 设计模型 - 用 Float 布局来占满父容器的宽度
+
+在这个示范我们用三个元素把父容器的宽度完全占满。中间的元素使用 60% 的空间，两边个占 20%。
+
+[Float 布局 Demo](layout-with-floats.html)
+
+![](layout-with-floats.jpg)
+
+**HTML**:
+
+```html
+<div class="container float-layout">
+  <div class="child child--20">20%</div>
+  <div class="child child--60">60%</div>
+  <div class="child child--20">20%</div>
+</div>
+```
+
+**CSS**:
+
+```css
+.float-layout {
+  overflow: hidden;
+}
+
+.float-layout .child {
+  float: left;
+}
+
+.child--20 {
+  width: 20%;
+}
+
+.child--60 {
+  width: 60%;
+}
+```
+
+**实现原理**：
+
++ `width: 20%`, `width: 60%` 指定子元素的宽度。
++ `float: left` 让子元素向左飘动。
+
+这个技巧使用了 float。float 的排版和不同行元素和块元素的排版是完全不一样的机制。关于 float 的科普知识你可以看 [All About Floats](https://css-tricks.com/all-about-floats/) 这篇文。请忽略关于 IE6 的坑。
+
+你可能注意到了父容器的 overflow 属性。它的效用是：
+
++ `overflow: hidden` 强制容器有住够的高度包围飘动元素。
+
+假如没有使用 `overflow: hidden`, 而是用了默认的 `overflow: visible`，我们会得到这个效果：
+
+![](layout-with-floats-container-collapse.jpg)
+
+这个效果可以分成几个步骤来理解：
+
+1. 容器高度为 0
+2. 飘动元素由容器凸出来
+3. 下面的文字在飘动元素右边显示，按照 float 的排版机制
+
+所以问题的出发点在于容器高度为 0。
+
+你可能会觉得 `overflow: hidden` 这个技巧非常不直观。下面我们解释它的原理。没兴趣的话你可以直接跳到练习。
+
+* * *
+
+容器在计算自身高度的时候必须要有住够的高度包围所有的子元素。但 float 的元素 （还有绝对定位的元素）并不包含在这个计算里面。这个行为依照 [CSS2.1 10.6.3](http://www.w3.org/TR/2011/REC-CSS2-20110607/visudet.html#normal-block) 的算法。
+
+`overflow: hidden` 做的改变是让容器 float 元素包含在高度计算，依照 [CSS2.1 10.6.7](http://www.w3.org/TR/2011/REC-CSS2-20110607/visudet.html#root-height) 的算法。
+
+为啥变成 `overflow: hidden` 容器就愿意把飘动元素算在自己的高度里面呢？为什么默认高度算法么奇怪，不把飘动元素计算进去？
+
+这是因为 float 的设计是为了方便图文排版，之后才拿来做 UI 布局。最经典的 float 用法是让一张飘动的图跨越两个文字块：
+
+![](float-image-wrap.png)
+
+默认的 `overflow: visible` 等于是说 “我允许容器里面的内容凸出这个容器”，所以在这个使用场景飘动的图片凸出了容器，并不包含在容器的高度里面。
+
+而 `overflow: hidden` 是说 “我不允许容器里面的内容凸出这个容器”。在这种情况针对 CSS 有两个方案可以选择：
+
+1. 把飘动图片截断
+2. 把容器扩大到住够的高，包围图片
+
+CSS 选择了 2 这个方案。
+
+
+### 练习 - 布局三个技能块
+
++ 用 float 来布局技能块
++ 给 .info-section 加上 padding。
+  ```css
+  .info-section {
+    padding: 30px 60px;
+  }
+  ```
++ 居中标题
++ 加上字体风格
+  ```css
+  .info-section header h2 {
+    font-size: 28px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+  }
+
+  .info-section__description {
+    font-style: italic;
+  }
+  ```
++ 调整标题和内容的边距为 60px
+
+  ![](where-do-i-put-margin.jpg)
+
+  这个边距可以放在三个地方都可以达到相同的效果：
+
+  1. `whatido__skill-list` 的 margin-top
+  2. `.info-section header` 的 margin-bottom
+  3. `.info-section header h2` 的 margin-bottom
+
+  貌似随便选一个都没差。这时候你应该观察在页面其他地方是什么样子，再决定 CSS 怎么写才能重复利用•
+
+成果：
+
+![](done-layout-skills.jpg)
+
+# 再说 float 布局 - clearfix
+
+上个小节我们看到了用 Float 布局的时候容器高度为 0 的问题：
+
+![](layout-with-floats-container-collapse.jpg)
+
+这个问题有另外一个常见的解决方案 clearfix。
+
+### CSS 设计模型 - 用 clear 撑高容器
+
+[用 clearfix 撑高容器 Demo](clearfix.html)
+
+![](layout-with-floats.jpg)
+
+**HTML:**
+
+```html
+<div class="container float-layout">
+  <div class="child child--20">20%</div>
+  <div class="child child--60">60%</div>
+  <div class="child child--20 clearfix">20%</div>
+</div>
+```
+
+**CSS:**
+
+```css
+.clearfix:after {
+  content:"";
+  display:table;
+  clear:both;
+}
+```
+
+**实现原理**：
+
++ `content:""` 在 clearfix 这个元素之后加上一个空的伪元素
++ `clear:both` 使伪元素清除飘动元素
+
+我们之前说过，容器的高度之所以会是 0 是因为飘动元素不包括在容器高度的计算里面。想要撑高容器的话，我们可以在飘动元素后面加上一个普通元素：
+
+![](demo-clear-element.jpg)
+
+clearfix 利用 :after 伪元素创建了一个看不到的元素。
+
+clearfix 和之前介绍的 `overflow: hidden` 效果一模一样，但背后的原理其实不一样。你在实现的时候可以按情况选一个方便的来使用。
+
+关于 clearfix 的科普请看：[The very latest new new way to do "clearfix"](http://www.cssmojo.com/latest_new_clearfix_so_far/)
+
+### 练习 - 去掉 overflow 属性，改用 clearfix
+
+# 为何不用 Inline Block 布局
+
+说了这么多关于飘动元素的问题，反正只是让元素往左靠拢，为啥不用 inline-block 就好了？
+
+原因是因为使用 inline-block， 标签之间的空白 （缩进）会显现出来。
+
+[行元素之间的空白 Demo](float-vs-inline.html)
+
+![](demo-float-vs-inline.jpg)
+
++ 如果你的布局对空白不敏感 （比如我们之前实现的导航），那么你可以选用 inline-block
++ 对空白敏感的布局 （分栏，grid）请用 float
+
+# 标题装饰
+
+![](add-info-section-title-decorator.jpg)
+
+标题下面的下划线装饰属于样式范畴，而非文本语义的范畴。与其在 HTML 加个没有意义的 hr 元素，请用 `:after` 伪元素创建这个下划线。
+
+### 练习 - 为标题加上下划线
+
++ 用 `border-bottom: 3px solid black` 来划线

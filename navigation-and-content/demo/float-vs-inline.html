@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+  <head>
+    <style>
+      body {
+        padding: 0;
+        margin: 0;
+
+      }
+
+      .container {
+        width: 960px;
+        margin: 0 auto;
+        margin-top: 50px;
+
+        border: 3px solid black;
+        background-color: #CACACA;
+
+      }
+
+      .child {
+        width: 20%;
+        height: 100px;
+        text-align: center;
+        color: #fff;
+      }
+
+      .float-layout {
+        overflow: hidden;
+      }
+      .float-layout .child {
+        float: left;
+      }
+
+      .inline-layout .child {
+        display: inline-block;
+      }
+
+      .red {
+        background-color: red;
+      }
+
+      .blue {
+        background-color: blue;
+      }
+
+      .green {
+        background-color: green;
+      }
+
+    </style>
+  </head>
+  <body>
+    <h1>Inline-Block Elements</h1>
+
+    <div class="container inline-layout">
+      <div class="child red">item 1</div>
+      <div class="child blue">item 2</div>
+      <div class="child green">item 3</div>
+    </div>
+
+    <h1>Floating Elements</h1>
+
+    <div class="container float-layout">
+      <div class="child red">item 1</div>
+      <div class="child blue">item 2</div>
+      <div class="child green">item 3</div>
+    </div>
+  </body>
+</html>
