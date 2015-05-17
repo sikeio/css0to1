@@ -63,11 +63,28 @@ See: http://www.sitepoint.com/web-foundations/doctypes/
 请你克隆这个课程的样板：
 
 ```
-git clone https://github.com/hayeah/fork2-css-lesson-starter.git
+git clone https://github.com/sikeio/css0to1-startkit
 ```
 
 点击 `index.html` 打开页面。
 
+# Live 页面编辑
+
+每次做了修改还要自己手动刷新页面挺麻烦的。用 [BrowserSync](http://www.browsersync.io/) 可以省去这个麻烦。
+
+安装 BrowserSync (依赖 NodeJS):
+
+```
+npm install browser-sync@2.7.1
+```
+
+然后在项目目录运行这个命令：
+
+```
+browser-sync start --server --port 4000 --files index.html --files css/main.css
+```
+
+这样页面就会自动刷新了。
 
 # 设置固定背景
 
