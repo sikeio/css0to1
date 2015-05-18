@@ -365,6 +365,47 @@ Collapsing Margins](http://www.sitepoint.com/web-foundations/collapsing-margins/
 
 ![](done-header.jpg)
 
+# 怎样排序 CSS 属性
+
+在开发前端的过程 CSS 属性可能会越积越多。如果只是随机排序，一眼看上去很难理解它的布局。比如：
+
+```css
+.main-header__avatar {
+  border-radius: 999px;
+  border: 3px solid white;
+  margin: 0 auto;
+  display: block;
+  margin-top: -70px;
+  box-shadow: 0 0px 2px 1px rgba(0,0,0,0.2);
+}
+```
+
+如果我们把定位还有盒模型相关的属性放前面，看起来会清晰很多：
+
+```css
+.main-header__avatar {
+  display: block;
+  margin: 0 auto;
+  margin-top: -70px;
+  border: 3px solid white;
+
+  border-radius: 999px;
+  box-shadow: 0 0px 2px 1px rgba(0,0,0,0.2);
+}
+```
+
+具体的属性排序可以按照以下的规则：
+
+1. 定位属性: position, float, z-index, clear
+2. 盒模型相关属性: padding, margin, display, width, height, border
+3. 字体相关
+4. CSS2 视觉相关属性 (background)
+5. CSS3 属性 (border-radius, box-shadow)
+
+详情请看 [CSS property order - @mdo](http://markdotto.com/2011/11/29/css-property-order/)
+
+### 练习 - 重新排序你的 CSS 属性
+
 # Part 1 - 总结
 
 在这个课程的 Part 1 你学会了如何使用 CSS 设计模型来实现一些简单的页面布局：
