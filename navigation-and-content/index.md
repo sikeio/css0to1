@@ -361,7 +361,7 @@ ul.inline-items li {
 
 在这个示范我们用 CSS 背景给头部容器加上一个鲸鱼商标。
 
-[给文档流以外的东西留空间 Demo](padding-reserve-space.html)
+[给文档流以外的东西留空间 Demo](demo/padding-reserve-space.html)
 
 ![](padding-reserve-space_html.jpg)
 
@@ -426,7 +426,7 @@ header {
 
 在这个示范我们用三个元素把父容器的宽度完全占满。中间的元素使用 60% 的空间，两边个占 20%。
 
-[Float 布局 Demo](layout-with-floats.html)
+[Float 布局 Demo](demo/layout-with-floats.html)
 
 ![](layout-with-floats.jpg)
 
@@ -555,7 +555,7 @@ CSS 选择了 2 这个方案。
 
 ### CSS 设计模型 - 用 clear 撑高容器
 
-[用 clearfix 撑高容器 Demo](clearfix.html)
+[用 clearfix 撑高容器 Demo](demo/clearfix.html)
 
 ![](layout-with-floats.jpg)
 
@@ -602,7 +602,7 @@ clearfix 和之前介绍的 `overflow: hidden` 效果一模一样，但背后的
 
 原因是因为使用 inline-block， 标签之间的空白 （缩进）会显现出来。
 
-[行元素之间的空白 Demo](float-vs-inline.html)
+[行元素之间的空白 Demo](demo/float-vs-inline.html)
 
 ![](demo-float-vs-inline.jpg)
 
