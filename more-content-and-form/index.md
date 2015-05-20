@@ -157,7 +157,7 @@ html {
 + `box-sizing: border-box` 设定 html 为 border-box
 + `box-sizing: inherit` 其他元素基础父元素的 box-sizing 属性
 
-这样的结果是所有元素都通过基础获得 border-box 的属性。全选也可以达到一样的目的：
+这样的结果是所有元素都通过继承获得 border-box 的属性。全选也可以达到一样的目的：
 
 ```css
 * {
