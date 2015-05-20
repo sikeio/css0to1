@@ -412,7 +412,7 @@ header {
   + `background-repeat: no-repeat;`
 + 居中背景图
   + `background-position: center top;`
-+ 元素内部要有住够的空间完整地显示背景图
++ 元素内部要有足够的空间完整地显示背景图
 
 成果：
 
