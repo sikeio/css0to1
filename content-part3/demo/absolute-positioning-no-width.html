@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+  <head>
+    <style>
+      body {
+        padding: 0;
+        margin: 0;
+      }
+
+      .container {
+        width: 640px;
+        margin: 0 auto;
+        margin-top: 50px;
+        border: 1px solid black;
+      }
+
+      .box {
+        position: relative;
+        width: 150px;
+        height: 1em;
+        margin: 100px auto;
+
+        background-color: #ddd;
+        text-align: center;
+      }
+
+      .align-bottom {
+        position: absolute;
+        top: 100%;
+
+        background: red;
+      }
+
+      .align-left {
+        position: absolute;
+        top: 0;
+        left: -100%;
+
+        background: red;
+      }
+
+      .align-right {
+        position: absolute;
+        top: 0;
+        left: 100%;
+
+        background: red;
+      }
+
+      .align-top {
+        position: absolute;
+        bottom: 100%;
+
+        background: red;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+
+      <div class="box">
+        align top
+        <div class="align-top">
+          I am absolutely positioned
+        </div>
+      </div>
+
+      <div class="box">
+        align left
+        <div class="align-left">
+          I am absolutely positioned
+        </div>
+      </div>
+
+      <div class="box">
+        align right
+        <div class="align-right">
+          I am absolutely positioned
+        </div>
+      </div>
+
+      <div class="box">
+        align bottom
+        <div class="align-bottom">
+          I am absolutely positioned
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>
