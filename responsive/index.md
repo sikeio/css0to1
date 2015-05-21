@@ -279,3 +279,11 @@ Mobile-first 的实现思路由简单到复杂，做起来可能比较直观。�
 其他针对移动端优化的贴心小技巧可以读这篇文：
 
 [Creating a Mobile-First Responsive Web Design](http://www.html5rocks.com/en/mobile/responsivedesign/)
+
+# 分享
+
+谢谢你一路跟着做，完成了这个课程。辛苦你了。
+
+觉得有收获，请你在朋友圈分享这个课程，帮助我们成长 ：）
+
+![](qr-code.png)
