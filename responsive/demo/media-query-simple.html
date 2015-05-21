@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+  <head>
+    <style>
+      body {
+        padding: 0;
+        margin: 0;
+      }
+
+      .change-color {
+        background: red;
+      }
+
+      @media only screen and (max-width : 500px) {
+        .change-color {
+          background: green;
+        }
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <div class="change-color">
+      green when the screen is less than 500px.
+    </div>
+  </body>
+</html>
