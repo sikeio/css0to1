@@ -206,12 +206,12 @@ body {
 
 1. [块级元素](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Block-level_elements) -
   + p, div, h1, h2, table, ol 等等
-2. [行元素](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Inline_elemente) - 在文字流里面显示，浏览器不会添加空行。默认宽度刚好适应内容。
+2. [行元素](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Inline_elemente) - 在文字流里面显示，浏览器不会添加断行。默认宽度刚好适应内容。
   + span, img, a, button, input 等等
 
 我们来看看浏览器怎么渲染这两种不同类型的元素：
 
-* 灰色背景是块级元素。浏览器会在块级元素前后增加空行。这些元素的默认宽度会填满父容器。
+* 灰色背景是块级元素。浏览器会在块级元素前后增加断行。这些元素的默认宽度会填满父容器。
 
 * 红色背景是行元素，他们的宽度刚好适应内容，而且不会造成断行。
 
