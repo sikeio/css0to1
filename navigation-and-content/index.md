@@ -68,7 +68,7 @@ Naive！
 3. 头部模块应该使用 `header`
 4. 无编号列表模块应该使用 `ul`
 
-HTML5 引入了一系列的语义标签，如 header, article, section, header, nav, 等等。
+HTML5 引入了一系列的语义标签，如 header, footer, article, section, nav, 等等。
 
 在编写主导航的时候我们应该这么分析：
 
