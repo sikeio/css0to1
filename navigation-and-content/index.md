@@ -420,7 +420,7 @@ header {
 
 # 三个技能的布局
 
-实现这个效果我们只需要把夫容器的宽度平均分配给三个同宽的元素即可，也就是说每个元素个占 33.3% 的宽度。
+实现这个效果我们只需要把父容器的宽度平均分配给三个同宽的元素即可，也就是说每个元素个占 33.3% 的宽度。
 
 ### CSS 设计模型 - 用 Float 布局来占满父容器的宽度
 
@@ -469,7 +469,7 @@ header {
 
 你可能注意到了父容器的 overflow 属性。它的效用是：
 
-+ `overflow: hidden` 强制容器有住够的高度包围飘动元素。
++ `overflow: hidden` 强制容器有足够的高度包围飘动元素。
 
 假如没有使用 `overflow: hidden`, 而是用了默认的 `overflow: visible`，我们会得到这个效果：
 
@@ -487,7 +487,7 @@ header {
 
 * * *
 
-容器在计算自身高度的时候必须要有住够的高度包围所有的子元素。但 float 的元素 （还有绝对定位的元素）并不包含在这个计算里面。这个行为依照 [CSS2.1 10.6.3](http://www.w3.org/TR/2011/REC-CSS2-20110607/visudet.html#normal-block) 的算法。
+容器在计算自身高度的时候必须要有足够的高度包围所有的子元素。但 float 的元素 （还有绝对定位的元素）并不包含在这个计算里面。这个行为依照 [CSS2.1 10.6.3](http://www.w3.org/TR/2011/REC-CSS2-20110607/visudet.html#normal-block) 的算法。
 
 `overflow: hidden` 做的改变是让容器 float 元素包含在高度计算，依照 [CSS2.1 10.6.7](http://www.w3.org/TR/2011/REC-CSS2-20110607/visudet.html#root-height) 的算法。
 
@@ -502,7 +502,7 @@ header {
 而 `overflow: hidden` 是说 “我不允许容器里面的内容凸出这个容器”。在这种情况针对 CSS 有两个方案可以选择：
 
 1. 把飘动图片截断
-2. 把容器扩大到住够的高，包围图片
+2. 把容器扩大到足够的高，包围图片
 
 CSS 选择了 2 这个方案。
 
@@ -596,11 +596,11 @@ clearfix 和之前介绍的 `overflow: hidden` 效果一模一样，但背后的
 
 ### 练习 - 去掉 overflow 属性，改用 clearfix
 
-# 为何不用 Inline Block 布局
+# 为何不用 Inline Block 做布局
 
 说了这么多关于飘动元素的问题，反正只是让元素往左靠拢，为啥不用 inline-block 就好了？
 
-原因是因为使用 inline-block， 标签之间的空白 （缩进）会显现出来。
+原因是因为行元素 （inline 和 inline-block） 是为了显示文字用的。 如果在书写 HTML 文件时行元素之间有空白符，这些空白会显现出来。
 
 [行元素之间的空白 Demo](demo/float-vs-inline.html)
 
