@@ -574,7 +574,7 @@ CSS 选择了 2 这个方案。
 ```css
 .clearfix:after {
   content:"";
-  display:block;
+  display:table;
   clear:both;
 }
 ```
@@ -583,6 +583,7 @@ CSS 选择了 2 这个方案。
 
 + `content:""` 在 clearfix 这个元素内部最后加上一个空的伪元素该元素与 `.child` 类并列
 + `clear:both` 使伪元素清除飘动元素
++ notice:这里 `display:table` 是为了处理 `margin collapse` ，参考这篇[文章](http://nicolasgallagher.com/micro-clearfix-hack/)，至于后面的标题装饰也会使用到这个技巧，不过那里就不要用 `display:table` 了，应该使用 `display:block`
 
 我们之前说过，容器的高度之所以会是 0 是因为飘动元素不包括在容器高度的计算里面。想要撑高容器的话，我们可以在飘动元素后面加上一个普通元素：
 
