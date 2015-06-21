@@ -63,7 +63,7 @@ See: http://www.sitepoint.com/web-foundations/doctypes/
 请你克隆这个课程的样板：
 
 ```
-git clone https://github.com/sikeio/css0to1-startkit
+git clone https://github.com/sikeio/css0to1-startkit.git
 ```
 
 点击 `index.html` 打开页面。
