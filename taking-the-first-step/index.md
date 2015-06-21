@@ -116,7 +116,7 @@ MDN 和 Can I Use 这两个网站在前端开发中非常重要，在使用 CSS3
 * CSS
 ```css
 body {
-    background-image: url(http://uploads.striking.ly/page/images/backgrounds/bg5.jpg);
+    background-image: url(../img/bg5.jpg);
     background-attachment: fixed;
     background-size: cover;
     background-position: center;
