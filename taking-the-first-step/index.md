@@ -314,7 +314,7 @@ text-shadow: 0 1px rgba(0,0,0,0.3);
 
 ### CSS 技巧 - 用 margin 调整间距
 
-我们要用 margin 来指定元素直接的间距。在这个例子我们让一个容器里的每个元素之间有 50px 的间距。元素和容器也有 50px 的间距。
+我们要用 margin 来指定元素之间的间距。在这个例子我们让一个容器里的每个元素之间有 50px 的间距。元素和容器也有 50px 的间距。
 
 ![](demo-prevent-margin-collapse.jpg)
 
