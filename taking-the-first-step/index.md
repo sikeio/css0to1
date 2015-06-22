@@ -68,7 +68,9 @@ git clone https://github.com/sikeio/css0to1-startkit.git
 
 点击 `index.html` 打开页面。
 
-# Live 页面编辑
+# Live 页面编辑(可选项)
+
++ BrowserSync
 
 每次做了修改还要自己手动刷新页面挺麻烦的。用 [BrowserSync](http://www.browsersync.io/) 可以省去这个麻烦。
 
@@ -86,7 +88,10 @@ browser-sync start --server --port 4000 --files index.html --files css/main.css
 
 这样页面就会自动刷新了。
 
-我个人喜欢命令行工具。如果你安装不了 Node 工具，也可以尝试看看 [F5 Web 编辑器](http://getf5.com/)。
+我个人喜欢命令行工具。如果你安装不了 Node 工具，也可以尝试看看F5 Web 编辑器 。
+
++ [F5 Web 编辑器](http://getf5.com/)
+
 
 # 设置固定背景
 
@@ -127,11 +132,11 @@ body {
 
 实现原理：
 
-+ `background-attachment: fixed` 使背景图不随页面的滚动而滚动
++ `background-attachment: fixed;` 使背景图不随页面的滚动而滚动
   + [Can I Use: background-attachment](http://caniuse.com/#feat=background-attachment)
   + [MDN: background-attachment](https://developer.mozilla.org/zh-CN/docs/CSS/background-attachment)
 
-* `background-size: cover` 使背景图始终填满整个屏幕
+* `background-size: cover;` 使背景图始终填满整个屏幕
   + [Can I Use: background-size](http://caniuse.com/#search=background-size)
   + [MDN: background-size](https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-size)
 
@@ -183,8 +188,8 @@ body {
 
 实现原理：
 
-+ `width: 960px` 设置外包围框的宽度。
-+ `margin: 0 auto` 让浏览器自动计算左右 margin，使外包围框居中。
++ `width: 960px;` 设置外包围框的宽度。
++ `margin: 0 auto;` 让浏览器自动计算左右 margin，使外包围框居中。
   + 这个居中技巧只限于有设置宽度的容器。
 
 你常常会看到网页选择 960px 这个宽度，这是因为一般浏览器是 1024 宽，加上滚动条就是 1000-1004。960 给滚动条和其他浏览器 UI 预留了住够的空间。
@@ -257,7 +262,7 @@ body {
 
 实现原理：
 
-+ `display: block` 把行元素变成块元素
++ `display: block;` 把行元素变成块元素
 + `margin: 0 auto;` 居中块元素
   + 元素一定要有 `width` 属性
 + `text-align: center;` 通过容器来居中行元素
@@ -342,10 +347,10 @@ text-shadow: 0 1px rgba(0,0,0,0.3);
   }
   ```
 
-+ `margin-top: 50px` 和 `margin-bottom: 50px` 设定间距
-+ `padding: 1px` 禁止 .container 折叠间距
++ `margin-top: 50px;` 和 `margin-bottom: 50px;` 设定间距
++ `padding: 1px;` 禁止 .container 折叠间距
 
-在 .container 上面加上的 `padding: 1px` 有点神奇。假如我们没有加上这个 `padding: 1px`，你会发现效果变成了这样：
+在 .container 上面加上的 `padding: 1px;` 有点神奇。假如我们没有加上这个 `padding: 1px;`，你会发现效果变成了这样：
 
 ![](demo-margin-collapse.jpg)
 
@@ -357,11 +362,11 @@ Collapsing Margins](http://www.sitepoint.com/web-foundations/collapsing-margins/
 ### 练习 - 调整头部容器里头像和标题的间距
 
 1. 头像
-  + 用 `margin-top: -70px` 把它往上调
-  + `margin-bottom: 10px`
+  + 用 `margin-top: -70px;` 把它往上调
+  + `margin-bottom: 10px;`
 
 2. 标题
-  + `margin-bottom: 20px`
+  + `margin-bottom: 20px;`
 
 实现后的效果像这样：
 
