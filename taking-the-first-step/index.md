@@ -86,6 +86,8 @@ browser-sync start --server --port 4000 --files index.html --files css/main.css
 
 这样页面就会自动刷新了。
 
+我个人喜欢命令行工具。如果你安装不了 Node 工具，也可以尝试看看 [F5 Web 编辑器](http://getf5.com/)。
+
 # 设置固定背景
 
 滚动页面时可以发现：
