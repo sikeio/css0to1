@@ -372,6 +372,10 @@ Collapsing Margins](http://www.sitepoint.com/web-foundations/collapsing-margins/
 
 ![](done-header.jpg)
 
+如果效果做出来是这样：
+![](demo-header-avatar-margin-collapse.png)
+那么请高抬右手（左撇子抬左手），握住鼠标滑动滚轮，将页面滚动到`CSS 技巧 - 用 margin 调整间距`处
+
 # 怎样排序 CSS 属性
 
 在开发前端的过程 CSS 属性可能会越积越多。如果只是随机排序，一眼看上去很难理解它的布局。比如：
