@@ -15,3 +15,31 @@ CSS 有很多坑。同样的属性在不同的环境，或者使用在不同的�
 
 这个课程和其他教程不一样，我们不提供可以工作的代码。我们会按需求介绍 “CSS 设计模式” 给你认识，而你必须自己去尝试把这些概念应用在一个真正的页面上。请你打开你忠实的编辑器，边看边做！
 </Project>
+
+课外读物：
+
+- [Collapsing Margins](https://www.sitepoint.com/collapsing-margins/)
+
+- [What is the difference between Normalize.css and Reset CSS](https://stackoverflow.com/questions/6887336/what-is-the-difference-between-normalize-css-and-reset-css)
+
+- [Backgrounds In CSS: Everything You Need To Know](http://www.smashingmagazine.com/2009/09/02/backgrounds-in-css-everything-you-need-to-know/)
+
+- [Can I Use: Semantic Elements](https://caniuse.com/#search=semantic)
+
+- [Dive into HTML5 ](http://diveintohtml5.info/semantics.html)
+
+- [All about floats](https://css-tricks.com/all-about-floats/)
+
+- [A new micro clearfix hack](http://nicolasgallagher.com/micro-clearfix-hack/)
+
+- [The very latest new new way to do "clearfix"](http://www.cssmojo.com/latest_new_clearfix_so_far/)
+
+- [Block Formating Context](https://www.w3.org/TR/CSS21/visuren.html#block-formatting)
+
+- [CSS 101: Block Formatting Contexts](http://yuiblog.com/blog/2010/05/19/css-101-block-formatting-contexts/)
+
+- [How does the CSS Block Formatting Context work?](https://stackoverflow.com/questions/6196725/how-does-the-css-block-formatting-context-work/6199172#6199172)
+
+- [How To Write Mobile-First CSS](http://www.zell-weekeat.com/how-to-write-mobile-first-css/)
+
+- [Creating a Mobile-First Responsive Web Design](http://www.html5rocks.com/en/mobile/responsivedesign/)
